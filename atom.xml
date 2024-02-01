@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://croswuft.github.io</id>
+    <title>CrosWuft</title>
+    <updated>2024-02-01T15:31:18.156Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://croswuft.github.io"/>
+    <link rel="self" href="https://croswuft.github.io/atom.xml"/>
+    <subtitle>欢迎您来到本站,很高兴遇见你!本站由CrosWuft创建,目前是DT服务器的官网,以后或许会推出新功能，敬请期待！</subtitle>
+    <logo>https://croswuft.github.io/images/avatar.png</logo>
+    <icon>https://croswuft.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2024, CrosWuft</rights>
+    <entry>
+        <title type="html"><![CDATA[  欢迎您的到来!]]></title>
+        <id>https://croswuft.github.io/post/welcome/</id>
+        <link href="https://croswuft.github.io/post/welcome/">
+        </link>
+        <updated>2022-08-24T15:58:39.000Z</updated>
+        <content type="html"><![CDATA[<p>你可以在这探索本站的一些功能,如:你可以通过点击上面的'地铁村庄'进入地铁村庄的官方主页，你也可以通过点击上面的'首页'进入本网站的首页,你还可以点击'关于'了解本站及站长的一些信息............更多功能等你探索!!😀</p>
+]]></content>
+    </entry>
+</feed>
