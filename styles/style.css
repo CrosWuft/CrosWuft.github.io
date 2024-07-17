@@ -12,11 +12,10 @@ body {
     -moz-osx-font-smoothing: grayscale
 }
 
+
+
 #root,
 body,
-html {
-    width: 100%
-}
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
@@ -147,10 +146,12 @@ content .server-list .server-item {
 }
 
 a,
+/* style="text-align: center; position: fixed; z-index: 1; width: 100%; bottom: 0px; padding: 8px; backdrop-filter: blur(5px);" */
 footer {
     -webkit-user-select: none;
-    user-select: none
+    user-select: none;
 }
+
 
 .ant-progress-circle .ant-progress-text {
     color: #e4e8ec;
@@ -305,9 +306,7 @@ address {
 input[type=number],
 input[type=password],
 input[type=text],
-textarea {
-    -webkit-appearance: none
-}
+textarea,
 
 dl,
 ol,
@@ -467,9 +466,7 @@ select {
 [type=reset],
 [type=submit],
 button,
-html [type=button] {
-    -webkit-appearance: button
-}
+html [type=button],
 
 [type=button]::-moz-focus-inner,
 [type=reset]::-moz-focus-inner,
@@ -488,9 +485,7 @@ input[type=radio] {
 input[type=date],
 input[type=datetime-local],
 input[type=month],
-input[type=time] {
-    -webkit-appearance: listbox
-}
+input[type=time],
 
 textarea {
     overflow: auto;
@@ -525,10 +520,7 @@ progress {
     height: auto
 }
 
-[type=search] {
-    outline-offset: -2px;
-    -webkit-appearance: none
-}
+[type=search],
 
 [type=search]::-webkit-search-cancel-button,
 [type=search]::-webkit-search-decoration {
@@ -3655,11 +3647,7 @@ screen and (-ms-high-contrast:active) {
 }
 
 .ant-scroll-number-only,
-.ant-scroll-number-only>p.ant-scroll-number-only-unit {
-    height: 20px;
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden
-}
+.ant-scroll-number-only>p.ant-scroll-number-only-unit,
 
 .ant-scroll-number-only>p.ant-scroll-number-only-unit {
     margin: 0
@@ -23180,7 +23168,8 @@ screen and (-ms-high-contrast:active) {
     padding: 24px 50px;
     color: rgba(0, 0, 0, .85);
     font-size: 14px;
-    background: #f0f2f5
+    background: #f0f2f5;
+    position: absolute;
 }
 
 .ant-layout-content {
@@ -30724,7 +30713,7 @@ div.ant-typography-edit-content {
 .ant-typography-edit-content textarea {
     height: 1em;
     margin: 0 !important;
-    -moz-transition: none
+    /* -moz-transition: none */
 }
 
 .ant-typography ol,
@@ -30798,7 +30787,7 @@ span.ant-typography-ellipsis-single-line {
 .ant-typography-ellipsis-multiple-line {
     display: -webkit-box;
     overflow: hidden;
-    -webkit-line-clamp: 3;
+    /* -webkit-line-clamp: 3; */
     /*! autoprefixer: ignore next */
     -webkit-box-orient: vertical
 }
