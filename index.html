@@ -15,10 +15,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
     <meta name="description" content="欢迎您来到本站,很高兴遇见你!本站由CrosWuft创建,目前是DT服务器的官网,以后或许会推出新功能，敬请期待！" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
     <div class="main">
+        <script>
+            var vm = new Vue({
+                el: "#main"
+                , data() {
+                    return {};
+                }
+                , methods: {}
+                , mounted() { }
+                , created() { }
+            });
+        </script>
         <div class="main-content">
             <div class="site-header">
                 <a href="https://croswuft.github.io">
@@ -130,6 +142,8 @@
 
         </div>
     </div>
+
+
 </body>
 
 <footer class="ant-layout-footer"
