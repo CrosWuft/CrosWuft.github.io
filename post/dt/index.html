@@ -99,6 +99,26 @@
                                 2.QQ群内部下载(QQ群号)：246598890 <a
                                     href="https://qm.qq.com/cgi-bin/qm/qr?k=ABT95MVXzfjb4E6HQFOqCx6AoV3Ki-1c&amp;jump_from=webapi&amp;authKey=QIWLPpsH8ewhhrjlralzAE6mfTVj91DtOUrFn7Aqk8z10Qr8hPkF6zXWLOjcZvPy">点我跳转</a><br>
                                 mod列表(共18个mod,请仔细核对):<br>
+                            </p>
+
+
+
+                            <button id="downloadButton">下载文件</button>
+                            <script>
+                                document.getElementById('downloadButton').addEventListener('click', function () {
+                                    const fileURL = 'https://cdn.jsdelivr.net/gh/CrosWuft/CrosWuft.github.io@main/assets/mods.zip'; // 替换为你的文件路径
+                                    const link = document.createElement('a');
+                                    link.href = fileURL;
+                                    link.download = 'mods.zip'; // 下载文件名
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                });
+                            </script>
+
+
+
+                            <p>👀游戏Mod截图：<br>
                                 <img src="https://cdn.jsdelivr.net/gh/CrosWuft/CrosWuft.github.io@main/assets/1692623726963.png"
                                     alt="" loading="lazy"><br>
                                 💚游戏地址:<br>
@@ -149,6 +169,8 @@
                         </div>
                     </div>
 
+
+
                     <!-- 这里的视频有两个源，如果还是看不了的话我真没办法了。 -->
                     <video controls width="700">
                         <source
@@ -161,6 +183,8 @@
 
                 </article>
             </div>
+
+
 
             <div class="site-footer">
                 Powered by <a href="https://github.com/CrosWuft">CrosWuft</a>
