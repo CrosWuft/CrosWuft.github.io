@@ -1,4 +1,4 @@
-import './assets/siteheader.css'
+import './assets/gridea.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

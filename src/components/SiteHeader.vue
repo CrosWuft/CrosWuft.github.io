@@ -1,9 +1,7 @@
 <template>
     <div class="site-header">
         <a href="https://croswuft.github.io">
-            <img class="avatar"
-                src="https://cdn.jsdelivr.net/gh/CrosWuft/CrosWuft.github.io@main/assets/avatar.png?v=1706801474406"
-                alt="">
+            <img class="avatar" src="../../public/favicon.ico" alt="">
         </a>
         <h1 class="site-title">
             CrosWuft
