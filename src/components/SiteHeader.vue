@@ -28,10 +28,5 @@
                 地铁村庄
             </a>
         </div>
-        <div class="social-container">
-            <a href="https://github.com/CrosWuft" target="_blank">
-                <i class="ri-github-line"></i>
-            </a>
-        </div>
     </div>
 </template>
