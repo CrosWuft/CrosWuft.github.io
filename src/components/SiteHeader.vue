@@ -9,7 +9,8 @@
         <p class="site-description">
             欢迎您来到本站,很高兴遇见你!本站由CrosWuft创建,目前是DT服务器的官网,以后或许会推出新功能，敬请期待！
         </p>
-        <div class="menu-container">
+
+        <!--         <div class="menu-container">
 
 
             <a href="post/welcome/index.html" class="menu">
@@ -28,5 +29,6 @@
                 地铁村庄
             </a>
         </div>
+  -->
     </div>
 </template>
