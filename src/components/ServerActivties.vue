@@ -6,7 +6,6 @@
                     style="color: whitesmoke;width: 100%;padding-left: 2.5px; padding-right: 2.5px;">
                     服务器活动记录</div>
             </div>
-
             <div class="ant-card-body" style="border-color: aqua;">
                 <div class="ant-space ant-space-vertical" style="width: 100%; gap: 8px;">
                     <div class="ant-space-item">
@@ -31,7 +30,6 @@
             </div>
         </div>
     </div>
-
 </template>
 <style lang="css">
 .ant-layout-header {
@@ -45,6 +43,5 @@
     font-size: 20px;
     background-image: url('https://cdn.jsdelivr.net/gh/CrosWuft/CrosWuft.github.io@main/assets/sur.jpg');
     background-size: cover;
-    /* position: fixed; */
 }
 </style>
