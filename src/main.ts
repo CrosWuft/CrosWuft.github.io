@@ -1,4 +1,5 @@
-import './assets/gridea.css'
+import './styles/gridea.css'
+import './styles/mcmfweb.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

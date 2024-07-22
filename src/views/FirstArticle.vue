@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import ServerActivties from '@/components/ServerActivties.vue';
+</script>
 <template>
     <div class="post-container">
         <article class="post">
@@ -17,4 +20,5 @@
             </p>
         </article>
     </div>
+    <ServerActivties />
 </template>
