@@ -1,4 +1,4 @@
-d<template>
+<template>
     <div class="post-container">
         <article class="post">
             <h2 class="post-title">欢迎您的到来!</h2>
