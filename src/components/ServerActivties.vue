@@ -44,6 +44,7 @@
     text-align: center;
     font-size: 20px;
     background-image: url('https://cdn.jsdelivr.net/gh/CrosWuft/CrosWuft.github.io@main/assets/sur.jpg');
-
+    background-size: cover;
+    /* position: fixed; */
 }
 </style>
