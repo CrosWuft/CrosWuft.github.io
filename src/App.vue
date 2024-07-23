@@ -5,10 +5,6 @@ import FirstArticle from './views/FirstArticle.vue';
 </script>
 
 <template>
-    <div class="main">
-        <div class="main-content">
-            <SiteHeader />
-            <FirstArticle />
-        </div>
-    </div>
+    <SiteHeader />
+    <FirstArticle />
 </template>
