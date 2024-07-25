@@ -51,15 +51,17 @@ body {
  * Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
  */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI"
-        , "Roboto"
-        , "Oxygen"
-        , "Ubuntu"
-        , "Cantarell"
-        , "Fira Sans"
-        , "Droid Sans"
-        , "Helvetica Neue"
-        , sans-serif;
+    font-family: -apple-system
+    , BlinkMacSystemFont
+    , "Segoe UI"
+    , "Roboto"
+    , "Oxygen"
+    , "Ubuntu"
+    , "Cantarell"
+    , "Fira Sans"
+    , "Droid Sans"
+    , "Helvetica Neue"
+    , sans-serif;
 }
 
 .serif,
@@ -69,10 +71,7 @@ body {
 /* Grouping content
    ========================================================================== */
 /* Text-level semantics
-   ========================================================================== */
-/**
- * Add the correct text decoration in Chrome, Edge, and Safari.
- */
+   ========================================================================== */ /** Add the correct text decoration in Chrome, Edge, and Safari. */
 abbr[title] {
     text-decoration: underline dotted;
 }
