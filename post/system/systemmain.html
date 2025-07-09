@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dt服务器订票系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c1a3a, #1d3b6c, #0c1a3a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(10, 25, 50, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 2px solid rgba(0, 200, 255, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #0a1a3a, #0d2b4e);
+            padding: 20px 30px;
+            border-bottom: 2px solid #00a8ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #00a8ff, #00ffcc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .ticket-switch {
+            background: rgba(0, 40, 80, 0.8);
+            border: 1px solid #00a8ff;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #00e4ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 100, 200, 0.3);
+        }
+
+        .ticket-switch:hover {
+            background: rgba(0, 100, 180, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 168, 255, 0.6);
+        }
+
+        .ticket-switch i {
+            font-size: 20px;
+        }
+
+        .main-content {
+            padding: 40px 30px;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .ticket-selection {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .ticket-selection h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #00e4ff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .ticket-options {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .ticket-option {
+            width: 300px;
+            height: 200px;
+            background: rgba(0, 30, 60, 0.7);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticket-option:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 100, 200, 0.4);
+            border-color: #00a8ff;
+        }
+
+        .ticket-option.train {
+            background: linear-gradient(135deg, rgba(0, 40, 80, 0.7), rgba(0, 100, 150, 0.7));
+        }
+
+        .ticket-option.plane {
+            background: linear-gradient(135deg, rgba(60, 30, 80, 0.7), rgba(100, 50, 150, 0.7));
+        }
+
+        .ticket-option i {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        .ticket-option.train i {
+            color: #00e4ff;
+        }
+
+        .ticket-option.plane i {
+            color: #b19cff;
+        }
+
+        .ticket-option h3 {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .ticket-form {
+            background: rgba(0, 20, 40, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(0, 168, 255, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #00e4ff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .station-selector {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .station-group {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .station-group label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #00e4ff;
+        }
+
+        .station-input {
+            position: relative;
+        }
+
+        .station-input input {
+            width: 100%;
+            padding: 16px 25px;
+            background: rgba(0, 30, 60, 0.8);
+            border: 2px solid #00a8ff;
+            border-radius: 12px;
+            font-size: 20px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .station-input input:focus {
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.8);
+        }
+
+        .dropdown-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #00e4ff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .stations-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(0, 30, 60, 0.95);
+            border: 2px solid #00a8ff;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 10;
+            margin-top: 8px;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .stations-list.active {
+            display: block;
+        }
+
+        .station-item {
+            padding: 15px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+        }
+
+        .station-item:hover {
+            background: rgba(0, 100, 180, 0.6);
+        }
+
+        .station-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-btn {
+            display: block;
+            width: 100%;
+            max-width: 350px;
+            margin: 40px auto 0;
+            padding: 18px;
+            background: linear-gradient(90deg, #00a8ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #002a4d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .book-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 168, 255, 0.7);
+        }
+
+        .ticket-result {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(0, 20, 40, 0.7);
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 2px dashed #00ffcc;
+            display: none;
+        }
+
+        .ticket-result.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .ticket-code {
+            font-size: 42px;
+            font-weight: 800;
+            color: #00ffcc;
+            margin: 30px 0;
+            letter-spacing: 3px;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .ticket-info {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #a0e0ff;
+        }
+
+        .animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 168, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(-1000px) translateX(500px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7aa8c7;
+            font-size: 16px;
+            border-top: 1px solid rgba(0, 168, 255, 0.2);
+        }
+
+        .ticket-type-indicator {
+            position: absolute;
+            top: 20px;
+            right: 200px;
+            padding: 5px 15px;
+            background: rgba(0, 100, 180, 0.6);
+            border-radius: 15px;
+            font-size: 16px;
+            color: #00ffcc;
+        }
+
+        @media (max-width: 768px) {
+            .station-selector {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .station-group {
+                min-width: 100%;
+            }
+
+            .ticket-options {
+                gap: 20px;
+            }
+
+            .ticket-option {
+                width: 100%;
+                max-width: 300px;
+                height: 180px;
+            }
+
+            .ticket-type-indicator {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 15px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="animation-container" id="animationContainer"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">dt服务器订票系统</div>
+            <div class="ticket-type-indicator" id="ticketTypeIndicator">当前票种：高铁票</div>
+            <div class="ticket-switch" id="ticketSwitch">
+                <i class="fas fa-exchange-alt"></i>
+                <span>切换票种</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="ticket-selection">
+                <h2>请选择票务类型</h2>
+                <div class="ticket-options">
+                    <div class="ticket-option plane" id="planeOption">
+                        <i class="fas fa-plane"></i>
+                        <h3>订购飞机票</h3>
+                    </div>
+                    <div class="ticket-option train selected" id="trainOption">
+                        <i class="fas fa-train"></i>
+                        <h3>订购高铁票</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 高铁票表单 -->
+            <div class="ticket-form" id="trainForm">
+                <h2 class="form-title">高铁票订购</h2>
+
+                <div class="station-selector">
+                    <div class="station-group">
+                        <label><i class="fas fa-map-marker-alt"></i> 起始站</label>
+                        <div class="station-input">
+                            <input type="text" id="trainStartStation" value="上海南站" readonly>
+                            <button class="dropdown-btn" id="trainStartDropdownBtn">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="stations-list" id="trainStartStationsList">
+                                <div class="station-item" data-value="上海南站">上海南站</div>
+                                <div class="station-item" data-value="北京站">北京站</div>
+                                <div class="station-item" data-value="天津站">天津站</div>
+                                <div class="station-item" data-value="深圳站">深圳站</div>
+                                <div class="station-item" data-value="香港西九龙站">香港西九龙站</div>
+                                <div class="station-item" data-value="杭州东站">杭州东站</div>
+                                <div class="station-item" data-value="重庆西站">重庆西站</div>
+                                <div class="station-item" data-value="广州南站">广州南站</div>
+                                <div class="station-item" data-value="广州西站">广州西站</div>
+                                <div class="station-item" data-value="成都东站">成都东站</div>
+                                <div class="station-item" data-value="上海站">上海站</div>
+                                <div class="station-item" data-value="上海西站">上海西站</div>
+                                <div class="station-item" data-value="上海虹桥站">上海虹桥站</div>
+                                <div class="station-item" data-value="上海白云站">上海白云站</div>
+                                <div class="station-item" data-value="静心湖站">静心湖站</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="station-group">
+                        <label><i class="fas fa-flag-checkered"></i> 终点站</label>
+                        <div class="station-input">
+                            <input type="text" id="trainEndStation" value="北京站" readonly>
+                            <button class="dropdown-btn" id="trainEndDropdownBtn">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="stations-list" id="trainEndStationsList">
+                                <div class="station-item" data-value="上海南站">上海南站</div>
+                                <div class="station-item" data-value="北京站">北京站</div>
+                                <div class="station-item" data-value="天津站">天津站</div>
+                                <div class="station-item" data-value="深圳站">深圳站</div>
+                                <div class="station-item" data-value="香港西九龙站">香港西九龙站</div>
+                                <div class="station-item" data-value="杭州东站">杭州东站</div>
+                                <div class="station-item" data-value="重庆西站">重庆西站</div>
+                                <div class="station-item" data-value="广州南站">广州南站</div>
+                                <div class="station-item" data-value="广州西站">广州西站</div>
+                                <div class="station-item" data-value="成都东站">成都东站</div>
+                                <div class="station-item" data-value="上海站">上海站</div>
+                                <div class="station-item" data-value="上海西站">上海西站</div>
+                                <div class="station-item" data-value="上海虹桥站">上海虹桥站</div>
+                                <div class="station-item" data-value="上海白云站">上海白云站</div>
+                                <div class="station-item" data-value="静心湖站">静心湖站</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="book-btn" id="trainBookBtn">
+                    <i class="fas fa-ticket-alt"></i> 立即购票
+                </button>
+
+                <div class="ticket-result" id="trainTicketResult">
+                    <h3><i class="fas fa-check-circle"></i> 高铁票订购成功！</h3>
+                    <div class="ticket-info">您的车票信息：</div>
+                    <div class="ticket-code" id="trainTicketCode">SHS-BJ AVBC69580 G</div>
+                    <div class="ticket-info" id="trainRouteInfo">上海南站 → 北京站</div>
+                    <div class="ticket-info">车票编号已生成，祝您旅途愉快！</div>
+                </div>
+            </div>
+
+            <!-- 飞机票表单 -->
+            <div class="ticket-form" id="planeForm">
+                <h2 class="form-title">飞机票订购</h2>
+
+                <div class="station-selector">
+                    <div class="station-group">
+                        <label><i class="fas fa-plane-departure"></i> 起始机场</label>
+                        <div class="station-input">
+                            <input type="text" id="planeStartStation" value="上海虹桥国际机场" readonly>
+                            <button class="dropdown-btn" id="planeStartDropdownBtn">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="stations-list" id="planeStartStationsList">
+                                <div class="station-item" data-value="上海虹桥国际机场">上海虹桥国际机场</div>
+                                <div class="station-item" data-value="北京首都机场">北京首都机场</div>
+                                <div class="station-item" data-value="杭州萧山机场">杭州萧山机场</div>
+                                <div class="station-item" data-value="天津双流机场">天津双流机场</div>
+                                <div class="station-item" data-value="重庆九江机场">重庆九江机场</div>
+                                <div class="station-item" data-value="深圳宝安机场">深圳宝安机场</div>
+                                <div class="station-item" data-value="广州白云机场">广州白云机场</div>
+                                <div class="station-item" data-value="成都天府机场">成都天府机场</div>
+                                <div class="station-item" data-value="香港国际机场">香港国际机场</div>
+                                <div class="station-item" data-value="澳门机场">澳门机场</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="station-group">
+                        <label><i class="fas fa-plane-arrival"></i> 目的机场</label>
+                        <div class="station-input">
+                            <input type="text" id="planeEndStation" value="北京首都机场" readonly>
+                            <button class="dropdown-btn" id="planeEndDropdownBtn">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="stations-list" id="planeEndStationsList">
+                                <div class="station-item" data-value="上海虹桥国际机场">上海虹桥国际机场</div>
+                                <div class="station-item" data-value="北京首都机场">北京首都机场</div>
+                                <div class="station-item" data-value="杭州萧山机场">杭州萧山机场</div>
+                                <div class="station-item" data-value="天津双流机场">天津双流机场</div>
+                                <div class="station-item" data-value="重庆九江机场">重庆九江机场</div>
+                                <div class="station-item" data-value="深圳宝安机场">深圳宝安机场</div>
+                                <div class="station-item" data-value="广州白云机场">广州白云机场</div>
+                                <div class="station-item" data-value="成都天府机场">成都天府机场</div>
+                                <div class="station-item" data-value="香港国际机场">香港国际机场</div>
+                                <div class="station-item" data-value="澳门机场">澳门机场</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="book-btn" id="planeBookBtn">
+                    <i class="fas fa-ticket-alt"></i> 立即购票
+                </button>
+
+                <div class="ticket-result" id="planeTicketResult">
+                    <h3><i class="fas fa-check-circle"></i> 飞机票订购成功！</h3>
+                    <div class="ticket-info">您的机票信息：</div>
+                    <div class="ticket-code" id="planeTicketCode">SHH-BJC AVBC69580 A</div>
+                    <div class="ticket-info" id="planeRouteInfo">上海虹桥国际机场 → 北京首都机场</div>
+                    <div class="ticket-info">机票编号已生成，祝您旅途愉快！</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>服务器订票系统 © 2025 </p>
+        </div>
+    </div>
+
+    <script>
+        // 初始化页面元素
+        const trainStartStationInput = document.getElementById('trainStartStation');
+        const trainEndStationInput = document.getElementById('trainEndStation');
+        const planeStartStationInput = document.getElementById('planeStartStation');
+        const planeEndStationInput = document.getElementById('planeEndStation');
+        const trainForm = document.getElementById('trainForm');
+        const planeForm = document.getElementById('planeForm');
+        const trainOption = document.getElementById('trainOption');
+        const planeOption = document.getElementById('planeOption');
+        const ticketSwitch = document.getElementById('ticketSwitch');
+        const ticketTypeIndicator = document.getElementById('ticketTypeIndicator');
+        const trainBookBtn = document.getElementById('trainBookBtn');
+        const planeBookBtn = document.getElementById('planeBookBtn');
+        const trainTicketResult = document.getElementById('trainTicketResult');
+        const planeTicketResult = document.getElementById('planeTicketResult');
+        const trainTicketCode = document.getElementById('trainTicketCode');
+        const planeTicketCode = document.getElementById('planeTicketCode');
+        const trainRouteInfo = document.getElementById('trainRouteInfo');
+        const planeRouteInfo = document.getElementById('planeRouteInfo');
+
+        // 车站代码映射
+        const trainStationCodes = {
+            "上海南站": "SHS",
+            "上海站": "SHC",
+            "上海西站": "SHW",
+            "上海虹桥站": "SHQ",
+            "上海白云站": "SHD",
+            "北京站": "BJ",
+            "天津站": "TJ",
+            "深圳站": "SZ",
+            "香港西九龙站": "HK",
+            "杭州东站": "HZ",
+            "重庆西站": "CQ",
+            "广州南站": "GZS",
+            "广州西站": "GZW",
+            "成都东站": "CD",
+            "静心湖站": "JXH"
+        };
+
+        // 机场代码映射
+        const planeAirportCodes = {
+            "上海虹桥国际机场": "SHH",
+            "北京首都机场": "BJC",
+            "杭州萧山机场": "HZX",
+            "天津双流机场": "TJS",
+            "重庆九江机场": "CQJ",
+            "深圳宝安机场": "SZB",
+            "广州白云机场": "GZB",
+            "成都天府机场": "CDT",
+            "香港国际机场": "HKA",
+            "澳门机场": "AMP"
+        };
+
+        // 生成随机字符串
+        function generateRandomString(length, isNumbers = false) {
+            let result = '';
+            const characters = isNumbers ? '0123456789' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const charactersLength = characters.length;
+
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+
+            return result;
+        }
+
+        // 初始化下拉菜单
+        function initDropdowns(dropdownBtn, stationsList, inputElement) {
+            dropdownBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stationsList.classList.toggle('active');
+            });
+
+            document.querySelectorAll(`#${stationsList.id} .station-item`).forEach(item => {
+                item.addEventListener('click', () => {
+                    inputElement.value = item.getAttribute('data-value');
+                    stationsList.classList.remove('active');
+                });
+            });
+        }
+
+        // 初始化所有下拉菜单
+        function initAllDropdowns() {
+            // 高铁起始站
+            initDropdowns(
+                document.getElementById('trainStartDropdownBtn'),
+                document.getElementById('trainStartStationsList'),
+                trainStartStationInput
+            );
+
+            // 高铁终点站
+            initDropdowns(
+                document.getElementById('trainEndDropdownBtn'),
+                document.getElementById('trainEndStationsList'),
+                trainEndStationInput
+            );
+
+            // 飞机起始机场
+            initDropdowns(
+                document.getElementById('planeStartDropdownBtn'),
+                document.getElementById('planeStartStationsList'),
+                planeStartStationInput
+            );
+
+            // 飞机目的机场
+            initDropdowns(
+                document.getElementById('planeEndDropdownBtn'),
+                document.getElementById('planeEndStationsList'),
+                planeEndStationInput
+            );
+
+            // 点击页面其他地方关闭下拉
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.stations-list').forEach(list => {
+                    list.classList.remove('active');
+                });
+            });
+        }
+
+        // 初始化购票按钮
+        function initBookingButtons() {
+            // 高铁购票按钮
+            trainBookBtn.addEventListener('click', () => {
+                const start = trainStartStationInput.value;
+                const end = trainEndStationInput.value;
+
+                if (!start || !end) {
+                    alert('请选择起始站和终点站');
+                    return;
+                }
+
+                if (start === end) {
+                    alert('起始站和终点站不能相同');
+                    return;
+                }
+
+                // 生成车票代码
+                const startCode = trainStationCodes[start] || "XXX";
+                const endCode = trainStationCodes[end] || "XXX";
+                const randomLetters = generateRandomString(4);
+                const randomNumbers = generateRandomString(5, true);
+                const code = `${startCode}-${endCode} ${randomLetters}${randomNumbers} G`;
+
+                trainTicketCode.textContent = code;
+                trainRouteInfo.textContent = `${start} → ${end}`;
+                trainTicketResult.classList.add('active');
+
+                // 滚动到结果位置
+                trainTicketResult.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // 飞机购票按钮
+            planeBookBtn.addEventListener('click', () => {
+                const start = planeStartStationInput.value;
+                const end = planeEndStationInput.value;
+
+                if (!start || !end) {
+                    alert('请选择起始机场和目的机场');
+                    return;
+                }
+
+                if (start === end) {
+                    alert('起始机场和目的机场不能相同');
+                    return;
+                }
+
+                // 生成机票代码
+                const startCode = planeAirportCodes[start] || "XXX";
+                const endCode = planeAirportCodes[end] || "XXX";
+                const randomLetters = generateRandomString(4);
+                const randomNumbers = generateRandomString(5, true);
+                const code = `${startCode}-${endCode} ${randomLetters}${randomNumbers} A`;
+
+                planeTicketCode.textContent = code;
+                planeRouteInfo.textContent = `${start} → ${end}`;
+                planeTicketResult.classList.add('active');
+
+                // 滚动到结果位置
+                planeTicketResult.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // 初始化票类型选择
+        function initTicketSelection() {
+            // 默认显示高铁票
+            trainForm.style.display = 'block';
+            planeForm.style.display = 'none';
+
+            // 选择高铁票
+            trainOption.addEventListener('click', () => {
+                trainForm.style.display = 'block';
+                planeForm.style.display = 'none';
+                trainOption.classList.add('selected');
+                planeOption.classList.remove('selected');
+                ticketTypeIndicator.textContent = '当前票种：高铁票';
+            });
+
+            // 选择飞机票
+            planeOption.addEventListener('click', () => {
+                trainForm.style.display = 'none';
+                planeForm.style.display = 'block';
+                planeOption.classList.add('selected');
+                trainOption.classList.remove('selected');
+                ticketTypeIndicator.textContent = '当前票种：飞机票';
+            });
+
+            // 切换票种按钮
+            ticketSwitch.addEventListener('click', () => {
+                if (trainForm.style.display === 'block') {
+                    trainForm.style.display = 'none';
+                    planeForm.style.display = 'block';
+                    planeOption.classList.add('selected');
+                    trainOption.classList.remove('selected');
+                    ticketTypeIndicator.textContent = '当前票种：飞机票';
+                } else {
+                    trainForm.style.display = 'block';
+                    planeForm.style.display = 'none';
+                    trainOption.classList.add('selected');
+                    planeOption.classList.remove('selected');
+                    ticketTypeIndicator.textContent = '当前票种：高铁票';
+                }
+            });
+        }
+
+        // 初始化背景动画
+        function initBackgroundAnimation() {
+            const container = document.getElementById('animationContainer');
+            const particleCount = 40;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // 随机大小
+                const size = Math.random() * 15 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+
+                // 随机动画延迟
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+
+                // 随机透明度
+                particle.style.opacity = Math.random() * 0.6 + 0.1;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // 初始化页面
+        function init() {
+            initAllDropdowns();
+            initBookingButtons();
+            initTicketSelection();
+            initBackgroundAnimation();
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>
