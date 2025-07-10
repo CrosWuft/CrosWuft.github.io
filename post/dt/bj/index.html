@@ -44,7 +44,7 @@
 
 
 
-                    <a href="/post/about" class="menu">
+                    <a href="/post/about/index.html" class="menu">
                         关于
                     </a>
 
@@ -68,15 +68,6 @@
                     <a href="https://github.com/CrosWuft" target="_blank">
                         <i class="ri-github-line"></i>
                     </a>
-
-
-
-
-
-
-
-
-
 
                 </div>
             </div>
@@ -124,9 +115,6 @@
             </div>
 
 
-
-
-
             <div class="site-footer">
                 Powered by <a href="https://github.com/CrosWuft">CrosWuft</a>
                 <a class="rss" href="https://croswuft.github.io/atom.xml" target="_blank">
@@ -141,15 +129,6 @@
         hljs.initHighlightingOnLoad()
 
         let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
-
-        // This should probably be throttled.
-        // Especially because it triggers during smooth scrolling.
-        // https://lodash.com/docs/4.17.10#throttle
-        // You could do like...
-        // window.addEventListener("scroll", () => {
-        //    _.throttle(doThatStuff, 100);
-        // });
-        // Only not doing it here to keep this Pen dependency-free.
 
         window.addEventListener("scroll", event => {
             let fromTop = window.scrollY;

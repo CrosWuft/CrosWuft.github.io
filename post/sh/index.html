@@ -42,7 +42,7 @@
                         首页
                     </a>
 
-                    <a href="/post/about" class="menu">
+                    <a href="/post/about/index.html" class="menu">
                         关于
                     </a>
 
@@ -56,7 +56,6 @@
                     <a href="../dt/index.html" class="menu">
                         地铁村庄
                     </a>
-
 
                 </div>
                 <div class="social-container">
@@ -78,10 +77,6 @@
                         <span>
                             2023-08-21
                         </span>
-                        <span>
-                            1 min read
-                        </span>
-
                     </div>
 
                     <div class="post-content-wrapper">
@@ -108,8 +103,9 @@
                                 <img src="https://cdn.jsdelivr.net/gh/CrosWuft/CrosWuft.github.io@main/assets/1692613166293.png"
                                     alt="" loading="lazy"><br>
                                 <img src="https://img.picui.cn/free/2024/07/17/6697d3b145688.png" alt="" loading="lazy">
-                                <a href="../SHU/SHU main.html">进入上海大学官网</a>
-                                <a href="../system/systemmain.html">进入服务器订票系统</a>
+                            <p style="font-size: larger;font-weight: bold;">相关网站:</p>
+                            <a href="../SHU/SHU main.html" style='font-size:large'>进入上海大学官网</a><br>
+                            <a href="../system/systemmain.html" style='font-size:large'>进入服务器订票系统</a>
                             </p>
 
                         </div>
@@ -120,15 +116,8 @@
                 </article>
             </div>
 
-
-
-
-
             <div class="site-footer">
                 Powered by <a href="https://github.com/CrosWuft">CrosWuft</a>
-                <a class="rss" href="https://croswuft.github.io/atom.xml" target="_blank">
-                    <i class="ri-rss-line"></i> RSS
-                </a>
             </div>
 
         </div>
@@ -138,15 +127,6 @@
         hljs.initHighlightingOnLoad()
 
         let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
-
-        // This should probably be throttled.
-        // Especially because it triggers during smooth scrolling.
-        // https://lodash.com/docs/4.17.10#throttle
-        // You could do like...
-        // window.addEventListener("scroll", () => {
-        //    _.throttle(doThatStuff, 100);
-        // });
-        // Only not doing it here to keep this Pen dependency-free.
 
         window.addEventListener("scroll", event => {
             let fromTop = window.scrollY;
