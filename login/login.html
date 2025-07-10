@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录窗口</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .logo h1 {
+            font-size: 2.8rem;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        .box {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 40px 35px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+        }
+
+        .box h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .box h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            border-radius: 2px;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-box label {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #999;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        .input-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6a11cb;
+            font-size: 18px;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 55px;
+            background: #f5f8ff;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            font-size: 16px;
+            padding: 0 20px 0 50px;
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .input-box input:focus {
+            border-color: #6a11cb;
+            background: white;
+        }
+
+        .input-box input:focus~label,
+        .input-box input:valid~label {
+            top: 0;
+            left: 50px;
+            font-size: 14px;
+            background: white;
+            padding: 0 5px;
+            color: #6a11cb;
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-box a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .btn-box a:hover {
+            color: #2575fc;
+            text-decoration: underline;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            flex: 1;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #loginBtn {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+
+        #loginBtn:hover {
+            background: linear-gradient(90deg, #5a0db5, #1c68e8);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 117, 252, 0.6);
+        }
+
+        #registerBtn {
+            background: #f0f4ff;
+            color: #6a11cb;
+            border: 1px solid #d0d8ff;
+        }
+
+        #registerBtn:hover {
+            background: #e6ecff;
+            transform: translateY(-3px);
+        }
+
+        .logged-in {
+            padding: 30px 0;
+        }
+
+        .logged-in h2 {
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .user-details {
+            text-align: center;
+        }
+
+        .user-details h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .user-details p {
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        #logoutBtn {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            color: white;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            margin-bottom: 15px;
+        }
+
+        #logoutBtn:hover {
+            background: linear-gradient(90deg, #c0392b, #a23526);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        #homeBtn {
+            background: #3498db;
+            color: white;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        #homeBtn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .footer {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 40px;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .box {
+                padding: 30px 20px;
+            }
+
+            .btn-box {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .buttons {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>CrosWuft登录系统</h1>
+            <p>登录您的账户至CrosWuft的网站</p>
+        </div>
+
+        <div class="box">
+            <div id="loginForm">
+                <h2>登录您的账户</h2>
+                <div class="input-box">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="text" required>
+                    <label for="text"> ---请输入账号</label>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" required>
+                    <label for="password">---请输入密码</label>
+                </div>
+                <div class="btn-box">
+                    <a href="../404.html">忘记密码?</a>
+                    <div class="buttons">
+                        <button id="loginBtn" onclick="login()">登录</button>
+                        <button id="registerBtn" onclick="register()">注册</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loggedIn" class="logged-in" style="display: none;">
+                <h2><i class="fas fa-check-circle"></i> 您已登录</h2>
+                <div class="user-info">
+                    <div class="avatar" id="userAvatar">C</div>
+                    <div class="user-details">
+                        <h3 id="usernameDisplay">用户名</h3>
+                        <p>用户级别: <span id="userLevel">普通用户</span></p>
+                        <p>账户积分: <span id="userCoin">0</span></p>
+                    </div>
+                </div>
+                <button id="logoutBtn" onclick="logout()">退出登录</button>
+                <button id="homeBtn" onclick="goToHome()">返回主页</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2023 CrosWuft | <a href="../404.html">隐私政策</a> | <a href="../404.html">使用条款</a></p>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            var username = document.getElementById("text").value;
+            var password = document.getElementById("password").value;
+
+            // 简单的表单验证
+            if (!username || !password) {
+                showError("请输入用户名和密码");
+                return;
+            }
+
+            // 登录逻辑
+            let loginSuccess = false;
+            let userLevel = "普通用户";
+            let coin = "0";
+
+            if (username === "croswuft" && password === "13413332599") {
+                loginSuccess = true;
+                userLevel = "站主";
+            }
+            else if (username === "resu" && password === "r") {
+                loginSuccess = true;
+                userLevel = "站主";
+            }
+            else if (username === "Ximng" && password === "88488848zz") {
+                loginSuccess = true;
+            }
+            else if (username === "NNzyo" && password === "114514") {
+                loginSuccess = true;
+            }
+            else if (username === "xingzhifeng" && password === "Yu20080218") {
+                loginSuccess = true;
+            }
+            else if (username === "Helloll" && password === "A25802580") {
+                loginSuccess = true;
+            }
+            else if (username === "admin" && password === "admin") {
+                loginSuccess = true;
+                userLevel = "网站测试管理员";
+                coin = "100";
+            }
+            else if (username === "cros2" && password === "CW123456789") {
+                loginSuccess = true;
+                userLevel = "站主";
+            }
+            else if (username === "123456" && password === "123456") {
+                loginSuccess = true;
+            }
+
+            if (loginSuccess) {
+                // 显示成功动画
+                const loginBtn = document.getElementById('loginBtn');
+                loginBtn.innerHTML = '<i class="fas fa-check"></i> 登录成功';
+                loginBtn.style.background = 'linear-gradient(90deg, #2ecc71, #27ae60)';
+
+                setTimeout(() => {
+                    // 保存到localStorage
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("level", userLevel);
+                    localStorage.setItem("coin", coin);
+
+                    // 保存到Cookie（有效期7天）
+                    setCookie("username", username, 7);
+                    setCookie("level", userLevel, 7);
+                    setCookie("coin", coin, 7);
+                    setCookie("isLoggedIn", "true", 7);
+
+                    // 更新已登录状态显示
+                    updateLoggedInState();
+
+                    // 切换到已登录视图
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('loggedIn').style.display = 'block';
+                }, 1000);
+            } else {
+                showError("用户名或密码错误");
+                // 添加抖动动画
+                const box = document.querySelector('.box');
+                box.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    box.style.animation = '';
+                }, 500);
+            }
+        }
+
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            const cookieName = name + "=";
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.indexOf(cookieName) === 0) {
+                    return cookie.substring(cookieName.length, cookie.length);
+                }
+            }
+            return "";
+        }
+
+        function updateLoggedInState() {
+            const username = localStorage.getItem("username") || getCookie("username");
+            const level = localStorage.getItem("level") || getCookie("level") || "普通用户";
+            const coin = localStorage.getItem("coin") || getCookie("coin") || "0";
+
+            if (username) {
+                document.getElementById('usernameDisplay').textContent = username;
+                document.getElementById('userLevel').textContent = level;
+                document.getElementById('userCoin').textContent = coin;
+                document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('loggedIn').style.display = 'block';
+            }
+        }
+
+        function showError(message) {
+            // 创建错误提示
+            const errorDiv = document.createElement('div');
+            errorDiv.style.position = 'fixed';
+            errorDiv.style.top = '20px';
+            errorDiv.style.left = '50%';
+            errorDiv.style.transform = 'translateX(-50%)';
+            errorDiv.style.backgroundColor = '#e74c3c';
+            errorDiv.style.color = 'white';
+            errorDiv.style.padding = '15px 30px';
+            errorDiv.style.borderRadius = '8px';
+            errorDiv.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            errorDiv.style.zIndex = '1000';
+            errorDiv.style.animation = 'fadeIn 0.3s';
+            errorDiv.textContent = message;
+
+            document.body.appendChild(errorDiv);
+
+            // 3秒后移除
+            setTimeout(() => {
+                errorDiv.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => {
+                    document.body.removeChild(errorDiv);
+                }, 300);
+            }, 3000);
+        }
+
+        function logout() {
+            // 添加淡出效果
+            const loggedInDiv = document.getElementById('loggedIn');
+            loggedInDiv.style.animation = 'fadeOut 0.5s';
+
+            setTimeout(() => {
+                // 清除本地存储
+                localStorage.removeItem("username");
+                localStorage.removeItem("level");
+                localStorage.removeItem("coin");
+
+                // 清除Cookie
+                document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "level=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "coin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "isLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+                // 切换回登录表单
+                document.getElementById('loginForm').style.display = 'block';
+                loggedInDiv.style.display = 'none';
+                loggedInDiv.style.animation = '';
+
+                // 重置表单
+                document.getElementById('text').value = '';
+                document.getElementById('password').value = '';
+
+                // 显示登出消息
+                showLogoutMessage();
+            }, 500);
+        }
+
+        function showLogoutMessage() {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.position = 'fixed';
+            messageDiv.style.top = '20px';
+            messageDiv.style.left = '50%';
+            messageDiv.style.transform = 'translateX(-50%)';
+            messageDiv.style.backgroundColor = '#3498db';
+            messageDiv.style.color = 'white';
+            messageDiv.style.padding = '15px 30px';
+            messageDiv.style.borderRadius = '8px';
+            messageDiv.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            messageDiv.style.zIndex = '1000';
+            messageDiv.style.animation = 'fadeIn 0.3s';
+            messageDiv.textContent = '已成功退出登录';
+
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => {
+                    document.body.removeChild(messageDiv);
+                }, 300);
+            }, 3000);
+        }
+
+        function register() {
+            alert("该网站目前采用人工注册方式，暂未支持在线注册，如需注册请联系站主");
+        }
+
+        function goToHome() {
+            window.location.href = "../index.html";
+        }
+
+        function error() {
+            window.location.href = "../404.html";
+        }
+
+        // 初始化页面时检查登录状态
+        document.addEventListener("DOMContentLoaded", function () {
+            // 添加动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                    20%, 40%, 60%, 80% { transform: translateX(10px); }
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translate(-50%, -20px); }
+                    to { opacity: 1; transform: translate(-50%, 0); }
+                }
+                
+                @keyframes fadeOut {
+                    from { opacity: 1; transform: translate(-50%, 0); }
+                    to { opacity: 0; transform: translate(-50%, -20px); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // 检查登录状态
+            updateLoggedInState();
+        });
+    </script>
+</body>
+
+</html>

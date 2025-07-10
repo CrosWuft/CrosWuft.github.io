@@ -122,6 +122,60 @@
         </div>
     </div>
 
+    <!-- 用户状态显示区域 -->
+    <div id="userStatus" style="position: absolute; top: 20px; right: 20px;">
+        <div id="loggedInStatus" style="display: none;">
+            <button id="userProfileBtn" style="background: linear-gradient(90deg, #6a11cb, #2575fc); 
+                         color: white; 
+                         padding: 8px 15px; 
+                         border-radius: 20px; 
+                         border: none; 
+                         cursor: pointer;" onclick="window.location.href='login/user.html'">
+                <i class="fas fa-user"></i>
+                <span id="loggedInUsername"></span>
+            </button>
+        </div>
+        <div id="loggedOutStatus">
+            <button onclick="window.location.href='/login/login.html'" style="background: #3498db; 
+                         color: white; 
+                         padding: 8px 15px; 
+                         border-radius: 20px; 
+                         border: none; 
+                         cursor: pointer;">
+                登录/注册
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 检查登录状态
+        function checkLoginStatus() {
+            const username = localStorage.getItem("username") || getCookie("username");
+            if (username) {
+                document.getElementById('loggedInStatus').style.display = 'block';
+                document.getElementById('loggedOutStatus').style.display = 'none';
+                document.getElementById('loggedInUsername').textContent = username;
+            } else {
+                document.getElementById('loggedInStatus').style.display = 'none';
+                document.getElementById('loggedOutStatus').style.display = 'block';
+            }
+        }
+
+        function getCookie(name) {
+            const cookieName = name + "=";
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.indexOf(cookieName) === 0) {
+                    return cookie.substring(cookieName.length, cookie.length);
+                }
+            }
+            return "";
+        }
+
+        // 页面加载时检查登录状态
+        document.addEventListener("DOMContentLoaded", checkLoginStatus);
+    </script>
 
 </body>
 <footer style="text-align: center; position: fixed; z-index: 1; width: 100%; bottom: 0px; padding: 8px;"

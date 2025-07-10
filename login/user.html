@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户信息</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1 i {
+            color: #6a11cb;
+        }
+
+        .user-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-info h2 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .user-info .user-level {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card i {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #6a11cb;
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .primary-btn {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+        }
+
+        .secondary-btn {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .logout-btn {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            color: #7f8c8d;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .user-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .user-info .user-level {
+                margin: 0 auto;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="user-container">
+        <div class="header">
+            <h1><i class="fas fa-user-circle"></i> 用户信息中心</h1>
+            <button onclick="window.history.back()"
+                style="background: #ecf0f1; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+                <i class="fas fa-arrow-left"></i> 返回
+            </button>
+        </div>
+
+        <div class="user-card">
+            <div class="user-header">
+                <div class="avatar-large" id="userAvatarLarge">C</div>
+                <div class="user-info">
+                    <h2 id="usernameDisplay">用户名</h2>
+                    <span class="user-level" id="userLevelDisplay">普通用户</span>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-coins"></i>
+                    <h3 id="userCoinDisplay">0</h3>
+                    <p>账户积分</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>1</h3>
+                    <p>登录天数</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fas fa-trophy"></i>
+                    <h3>0</h3>
+                    <p>完成任务</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3>0</h3>
+                    <p>成就点数</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="action-btn primary-btn" onclick="window.location.href='../404.html'">
+                    <i class="fas fa-user-edit"></i> 编辑资料
+                </button>
+                <button class="action-btn secondary-btn" onclick="window.location.href='../404.html'">
+                    <i class="fas fa-shield-alt"></i> 账户安全
+                </button>
+                <button class="action-btn logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
+                </button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 CrosWuft 用户中心</p>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载时显示用户信息
+        document.addEventListener("DOMContentLoaded", function () {
+            const username = localStorage.getItem("username") || getCookie("username");
+            const level = localStorage.getItem("level") || getCookie("level") || "普通用户";
+            const coin = localStorage.getItem("coin") || getCookie("coin") || "0";
+
+            if (!username) {
+                alert("您尚未登录，请先登录");
+                window.location.href = "login.html";
+                return;
+            }
+
+            document.getElementById('usernameDisplay').textContent = username;
+            document.getElementById('userLevelDisplay').textContent = level;
+            document.getElementById('userCoinDisplay').textContent = coin;
+            document.getElementById('userAvatarLarge').textContent = username.charAt(0).toUpperCase();
+        });
+
+        function getCookie(name) {
+            const cookieName = name + "=";
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.indexOf(cookieName) === 0) {
+                    return cookie.substring(cookieName.length, cookie.length);
+                }
+            }
+            return "";
+        }
+
+        function logout() {
+            // 清除本地存储
+            localStorage.removeItem("username");
+            localStorage.removeItem("level");
+            localStorage.removeItem("coin");
+
+            // 清除Cookie
+            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "level=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "coin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "isLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            // 跳转到登录页
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+
+</html>
