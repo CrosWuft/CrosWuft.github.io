@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026届高三19班专用点名器,power by CrosWuft</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            padding: 30px;
+            position: relative;
+        }
+
+        .chemistry-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle, #000 10%, transparent 10%),
+                radial-gradient(circle, #000 10%, transparent 10%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #2575fc;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            min-width: 160px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+        }
+
+        .btn-music {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+            color: white;
+        }
+
+        .name-display {
+            height: 220px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            border: 2px solid #e9ecef;
+        }
+
+        .current-name {
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: #2575fc;
+            text-align: center;
+            transition: all 0.2s ease;
+            padding: 20px;
+        }
+
+        .highlight {
+            color: #ff416c;
+            transform: scale(1.1);
+            text-shadow: 0 0 15px rgba(255, 65, 108, 0.6);
+        }
+
+        .blink {
+            animation: blink 0.3s ease infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.95);
+            }
+        }
+
+        .status-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        .status-panel h2 {
+            color: #2575fc;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .status-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .status-item {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-weight: bold;
+            min-width: 150px;
+        }
+
+        .status-value {
+            color: #2575fc;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .music-control {
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .control-panel {
+                flex-direction: column;
+            }
+
+            .current-name {
+                font-size: 2.5rem;
+            }
+
+            .status-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="chemistry-bg"></div>
+
+        <header>
+            <h1>高三19班专用点名器</h1>
+            <p class="subtitle">已加载学生名单，开始随机点名吧！</p>
+        </header>
+
+        <div class="control-panel">
+            <button id="startStopBtn" class="btn btn-primary">
+                <i class="fas fa-play"></i>开始点名
+            </button>
+            <button id="musicBtn" class="btn btn-music">
+                <i class="fas fa-music"></i>背景音乐: 目前关
+            </button>
+            <button id="resetBtn" class="btn btn-stop">
+                <i class="fas fa-redo"></i>重置已点
+            </button>
+        </div>
+
+        <div class="name-display">
+            <div id="currentName" class="current-name">等待点名</div>
+        </div>
+
+        <div class="status-panel">
+            <h2>点名状态</h2>
+            <div class="status-content">
+                <div class="status-item">
+                    总人数: <span id="totalCount" class="status-value">39</span>
+                </div>
+                <div class="status-item">
+                    未点人数: <span id="remainingCount" class="status-value">39</span>
+                </div>
+                <div class="status-item">
+                    已点人数: <span id="selectedCount" class="status-value">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="music-control">
+            <audio id="bgMusic" loop>
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+            </audio>
+        </div>
+
+        <footer>
+            <p>随机点名系统 &copy; 2025 高州四中2026届高三19班专用,power by<a href="https://croswuft.github.io/">CrosWuft</a> </p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 获取DOM元素
+            const startStopBtn = document.getElementById('startStopBtn');
+            const musicBtn = document.getElementById('musicBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const currentName = document.getElementById('currentName');
+            const bgMusic = document.getElementById('bgMusic');
+            const totalCountEl = document.getElementById('totalCount');
+            const remainingCountEl = document.getElementById('remainingCount');
+            const selectedCountEl = document.getElementById('selectedCount');
+
+            // 解析学生姓名和权重
+            function parseStudent(studentStr) {
+                const match = studentStr.match(/^(.+?)(?:（(\d+)）)?$/);
+                if (match) {
+                    return {
+                        name: match[1],
+                        weight: match[2] ? parseInt(match[2]) : 10
+                    };
+                }
+                return { name: studentStr, weight: 10 };
+            }
+
+            // 19班学生名单
+            const studentStrings = [
+                "郭梦瑜（4）", "杨志强", "吕婉仪", "卢佳", "李思铭",
+                "梁少君", "叶展华", "吴庭志", "梁成杰", "周恩城",
+                "黄俊玮", "林皓", "曾泉珍", "邓柏晓", "李逸龙",
+                "黎韩潇", "周钧豪", "吴铸杰（3）", "廖桥宇", "刘欣欣",
+                "梁伟斌", "梁心怡", "陈晓慧", "陈景皓", "何宛罄",
+                "邓思文", "杨裕", "肖茹", "黄伟健", "李经栋",
+                "杨安妮", "苏韦铭", "李康睿", "廖艺竣", "朱佳敏",
+                "熊国宝", "罗嘉栎", "梁倩桃", "郭舒媛"
+            ];
+
+            // 解析学生列表
+            const students = studentStrings.map(parseStudent);
+
+            // 初始化变量
+            let selectedStudents = [];
+            let isRolling = false;
+            let rollInterval;
+            let isMusicPlaying = false;
+
+            // 从localStorage加载已点名学生
+            function loadSelectedStudents() {
+                const saved = localStorage.getItem('selectedStudents');
+                const savedTime = localStorage.getItem('selectedStudentsTime');
+
+                // 检查是否在同一天
+                if (saved && savedTime) {
+                    const savedDate = new Date(parseInt(savedTime));
+                    const today = new Date();
+
+                    if (savedDate.getDate() === today.getDate() &&
+                        savedDate.getMonth() === today.getMonth() &&
+                        savedDate.getFullYear() === today.getFullYear()) {
+                        selectedStudents = JSON.parse(saved);
+                        updateCounts();
+                        return;
+                    }
+                }
+
+                // 如果不是同一天，清空已点名单
+                selectedStudents = [];
+                updateCounts();
+            }
+
+            // 保存已点名学生到localStorage
+            function saveSelectedStudents() {
+                localStorage.setItem('selectedStudents', JSON.stringify(selectedStudents));
+                localStorage.setItem('selectedStudentsTime', Date.now().toString());
+            }
+
+            // 更新计数显示
+            function updateCounts() {
+                totalCountEl.textContent = students.length;
+                remainingCountEl.textContent = students.length - selectedStudents.length;
+                selectedCountEl.textContent = selectedStudents.length;
+            }
+
+            // 根据权重随机选择学生
+            function weightedRandomSelect(availableStudents) {
+                // 计算总权重
+                const totalWeight = availableStudents.reduce((sum, student) => sum + student.weight, 0);
+
+                // 生成随机数
+                const random = Math.random() * totalWeight;
+
+                // 根据权重选择学生
+                let weightSum = 0;
+                for (const student of availableStudents) {
+                    weightSum += student.weight;
+                    if (random <= weightSum) {
+                        return student;
+                    }
+                }
+
+                // 如果由于浮点数精度问题没有返回，返回最后一个学生
+                return availableStudents[availableStudents.length - 1];
+            }
+
+            // 点名开始/停止功能
+            startStopBtn.addEventListener('click', function () {
+                if (selectedStudents.length >= students.length) {
+                    alert('所有学生都已被点到，请重置！');
+                    return;
+                }
+
+                if (!isRolling) {
+                    // 开始点名
+                    startRolling();
+                    startStopBtn.innerHTML = '<i class="fas fa-stop"></i>停止点名';
+                    startStopBtn.classList.add('btn-stop');
+                    if (isMusicPlaying) {
+                        bgMusic.play();
+                    }
+                } else {
+                    // 停止点名
+                    stopRolling();
+                    startStopBtn.innerHTML = '<i class="fas fa-play"></i>开始点名';
+                    startStopBtn.classList.remove('btn-stop');
+                    bgMusic.pause();
+                    bgMusic.currentTime = 0;
+                    //是否每次点名后立即重置已点名学生名单
+                    // if (confirm('是否每次点名后立即重置已点名学生名单？')) {
+                    //     selectedStudents = [];
+                    //     updateCounts();
+                    // }
+
+                    //重置已点名学生名单的代码已注释，如需启用请取消注释
+                    // selectedStudents = [];
+                    // updateCounts();
+                }
+            });
+
+            // 重置按钮功能
+            resetBtn.addEventListener('click', function () {
+                if (confirm('确定要重置已点名学生名单吗？')) {
+                    selectedStudents = [];
+                    saveSelectedStudents();
+                    updateCounts();
+                    alert('已点名学生名单已重置！');
+                }
+            });
+
+            // 背景音乐控制
+            musicBtn.addEventListener('click', function () {
+                isMusicPlaying = !isMusicPlaying;
+                musicBtn.innerHTML = `<i class="fas fa-music"></i>背景音乐: ${isMusicPlaying ? '目前开' : '目前关'}`;
+
+                if (isMusicPlaying && isRolling) {
+                    bgMusic.play();
+                } else {
+                    bgMusic.pause();
+                    bgMusic.currentTime = 0;
+                }
+            });
+
+            // 开始随机点名
+            function startRolling() {
+                isRolling = true;
+                currentName.classList.remove('blink');
+
+                rollInterval = setInterval(() => {
+                    // 获取未点到的学生
+                    const availableStudents = students.filter(student =>
+                        !selectedStudents.includes(student.name)
+                    );
+
+                    if (availableStudents.length === 0) {
+                        stopRolling();
+                        alert('所有学生都已被点到！');
+                        return;
+                    }
+
+                    // 使用加权随机选择一个学生
+                    const selectedStudent = weightedRandomSelect(availableStudents);
+
+                    // 更新显示
+                    currentName.textContent = selectedStudent.name;
+
+                    // 添加高亮效果
+                    currentName.classList.add('highlight');
+                    setTimeout(() => {
+                        currentName.classList.remove('highlight');
+                    }, 100);
+                }, 100); // 更快的转换间隔
+            }
+
+            // 停止随机点名
+            function stopRolling() {
+                isRolling = false;
+                clearInterval(rollInterval);
+
+                // 添加闪烁效果
+                currentName.classList.add('blink');
+
+                // 记录已点名学生
+                if (!selectedStudents.includes(currentName.textContent)) {
+                    selectedStudents.push(currentName.textContent);
+                    saveSelectedStudents();
+                    updateCounts();
+                }
+            }
+
+            // 初始化
+            loadSelectedStudents();
+        });
+    </script>
+</body>
+
+</html>
